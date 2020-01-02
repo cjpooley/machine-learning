@@ -70,19 +70,27 @@ for i = 1:m
   J_sum = J_sum + ((-y_i'*log(h_i)) - ((1-y_i)'*log(1-h_i)));
 endfor
 J = J_sum/m;
+Theta1_nobias = Theta1(:,2:end);
+Theta2_nobias = Theta2(:,2:end);
+reg = (lambda/(2*m))*((sum(Theta1_nobias(:).^2)) + (sum(Theta2_nobias(:).^2)));
+J = J + reg;
 
-
-
-
-
-
-
-
-
-
-
-
-
+b = (1:num_labels)';
+D_2 = zeros(num_labels, hidden_layer_size + 1);
+D_1 = zeros(hidden_layer_size, size(X, 2) + 1);
+for t = 1:m
+  a_1 = [1; X(t, :)'];
+  a_2 = [1; sigmoid(Theta1*a_1)];
+  a_3 = sigmoid(Theta2*a_2);
+  d_3 = a_3 - (b == y(t));
+  d_2 = (Theta2'*d_3).*([1; sigmoidGradient(Theta1*a_1)]); %   26x1.*26x1
+  D_2 = D_2 + d_3*a_2'; % 10x1*1x26 -> 10x26
+  D_1 = D_1 + d_2(2:end)*a_1'; % 25x1*1x401 -> 25x401
+endfor
+Theta1_reg = [zeros(size(Theta1,1),1), (lambda/m)*Theta1_nobias];
+Theta2_reg = [zeros(size(Theta2,1),1), (lambda/m)*Theta2_nobias];
+Theta1_grad = D_1/m + Theta1_reg;
+Theta2_grad = D_2/m + Theta2_reg;
 
 
 % -------------------------------------------------------------

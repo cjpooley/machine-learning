@@ -20,15 +20,10 @@ grad = zeros(size(theta));
 %
 
 
+diffs = (X*theta)-y;
+J = ((1/(2*m))*(diffs'*diffs))+((lambda/(2*m))*(theta(2:end)'*theta(2:end)));
 
-
-
-
-
-
-
-
-
+grad = ((1/m)*(X'*diffs))+((lambda/m)*[0; theta(2:end)]);
 
 % =========================================================================
 

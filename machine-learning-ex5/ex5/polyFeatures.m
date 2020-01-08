@@ -15,9 +15,11 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
-
-
-
+%disp("X"), disp(X);
+for i = 1:p
+  X_poly(:,i) = X.^i;
+endfor
+%disp("X_poly:"), disp(X_poly);
 
 
 % =========================================================================

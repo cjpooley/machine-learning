@@ -22,13 +22,13 @@ idx = zeros(size(X,1), 1);
 %
 
 
-
 for i = 1:size(X,1)
   smallestDist = -1;
   for j = 1:K
-    dist = norm(X(i) - centroids(j));
-    if smallestDist == -1 or dist < smallestDist
-      smallestDist
+    dist = norm(X(i,:) - centroids(j,:))^2;
+    if smallestDist == -1 || dist < smallestDist
+      smallestDist = dist;
+      idx(i) = j;
     endif
   endfor
 endfor

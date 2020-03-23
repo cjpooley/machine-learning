@@ -27,10 +27,21 @@ centroids = zeros(K, n);
 %
 
 
-
-
-
-
+for i = 1:K
+  count = 0;
+  sum = zeros(1,n);
+  for j = 1:m
+    if idx(j) == i
+      sum += X(j,:);
+      count++;
+    endif
+  endfor
+  if count > 0
+    centroids(i,:) = sum/count;
+  else
+    centroids(i,:) = sum;
+  endif
+endfor
 
 
 % =============================================================

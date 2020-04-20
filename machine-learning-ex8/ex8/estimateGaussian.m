@@ -22,13 +22,13 @@ sigma2 = zeros(n, 1);
 %
 
 
-
-
-
-
-
-
-
+disp(size(X));
+disp('mu:');
+mu = (sum(X)/m)';
+disp(mu);
+sigma2 = (sum((X .- mu').^2)/m)';
+disp('sigma2:');
+disp(sigma2);
 
 % =============================================================
 
